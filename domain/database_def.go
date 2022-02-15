@@ -4,8 +4,8 @@ import "database/sql"
 
 type Database interface {
 	Open() (*sql.DB, error)
-	Close(*sql.DB)
-	Migrate() error
+	Close(db *sql.DB)
+	Migrate(db *sql.DB) error
 }
 
 type DatabaseContext struct {
