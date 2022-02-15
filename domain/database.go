@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"active-order-management/domain/migration"
 	"active-order-management/global"
 	"database/sql"
 	"fmt"
@@ -25,6 +26,15 @@ func (dc *DatabaseContext) Close(db *sql.DB) {
 	fmt.Println("\n Database connection successfuly closed. \n")
 }
 
-func  (dc *DatabaseContext) Migrate() error {
+func  (dc *DatabaseContext) Migrate(db *sql.DB) error {
+	migrationContext := migration.NewContext(*db)
+
+	//Initial Migration Table Create
+	migrationTableColumns := `
+					version CHARACTER VARYING(10) PRIMARY KEY,
+					description CHARACTER VARYING(255)
+	`
+	migrationContext.CreateTable("migration", migrationTableColumns)
+
 	return nil
 }
