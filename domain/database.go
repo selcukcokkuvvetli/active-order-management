@@ -32,7 +32,8 @@ func  (dc *DatabaseContext) Migrate(db *sql.DB) error {
 	//Initial Migration Table Create
 	migrationTableColumns := `
 					version CHARACTER VARYING(10) PRIMARY KEY,
-					description CHARACTER VARYING(255)
+					description CHARACTER VARYING(255),
+					is_applied bit
 	`
 	migrationContext.CreateTable("migration", migrationTableColumns)
 
