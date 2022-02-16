@@ -1,16 +1,18 @@
 package migration
 
-import "database/sql"
+import (
+	"active-order-management/domain/entity"
+	"database/sql"
+)
 
 type Migration interface {
-	CreateTable(name, columns string) error
-	AlterTable(name, commands string) error
+	Apply(migrations []entity.Migration)
 }
 
 type Context struct {
-	DB sql.DB
+	DB *sql.DB
 }
 
-func NewContext(db sql.DB) Migration {
+func NewContext(db *sql.DB) Migration {
 	return &Context{DB: db}
 }
