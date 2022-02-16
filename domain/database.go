@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"active-order-management/domain/entity"
 	"active-order-management/domain/migration"
 	"active-order-management/global"
 	"database/sql"
@@ -27,14 +28,12 @@ func (dc *DatabaseContext) Close(db *sql.DB) {
 }
 
 func  (dc *DatabaseContext) Migrate(db *sql.DB) error {
-	migrationContext := migration.NewContext(*db)
+	migrationContext := migration.NewContext(db)
 
-	//Initial Migration Table Create
-	migrationTableColumns := `
-					version CHARACTER VARYING(10) PRIMARY KEY,
-					description CHARACTER VARYING(255)
-	`
-	migrationContext.CreateTable("migration", migrationTableColumns)
+	migrations := []entity.Migration {
+	}
+
+	migrationContext.Apply(migrations)
 
 	return nil
 }
