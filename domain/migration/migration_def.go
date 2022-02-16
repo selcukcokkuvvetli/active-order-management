@@ -10,9 +10,9 @@ type Migration interface {
 }
 
 type Context struct {
-	DB *sql.DB
+	CommandContext Command
 }
 
 func NewContext(db *sql.DB) Migration {
-	return &Context{DB: db}
+	return &Context{CommandContext: NewCommandContext(*db)}
 }

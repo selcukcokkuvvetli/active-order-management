@@ -20,7 +20,6 @@ func (mc *Context) initial_migration_table_create_20220216(migration entity.Migr
 	migrationVersion := "0.0.0"
 
 	if migrationVersion == migration.Version {
-		commandContext := NewCommandContext(*mc.DB)
 
 		//Initial Command Table Create
 		migrationTableColumns := `
@@ -28,7 +27,7 @@ func (mc *Context) initial_migration_table_create_20220216(migration entity.Migr
 					description CHARACTER VARYING(255),
 					is_applied bit
 	`
-		err := commandContext.CreateTable("migration", migrationTableColumns)
+		err := mc.CommandContext.CreateTable("migration", migrationTableColumns)
 
 		return err
 	}
