@@ -27,7 +27,7 @@ func (mc *Context) initial_migration_table_create_20220216(migration entity.Migr
 					description CHARACTER VARYING(255),
 					is_applied bit
 	`
-		err := mc.CommandContext.CreateTable("migration", migrationTableColumns)
+		err := mc.CommandContext.CreateTable("migrations", migrationTableColumns)
 
 		return err
 	}
