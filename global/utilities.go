@@ -5,3 +5,11 @@ func PanicIfError(err error) {
 		panic(err)
 	}
 }
+
+func BoolToPSQLBit(value bool) string {
+	if value {
+		return "1"
+	} else {
+		return "0"
+	}
+}
