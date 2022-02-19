@@ -3,6 +3,7 @@ package domain
 import (
 	"active-order-management/domain/entity"
 	"active-order-management/domain/migration"
+	"active-order-management/domain/repository"
 	"active-order-management/global"
 	"database/sql"
 	"fmt"
@@ -30,8 +31,13 @@ func (dc *DatabaseContext) Close(db *sql.DB) {
 func  (dc *DatabaseContext) Migrate(db *sql.DB) error {
 	migrationContext := migration.NewContext(db)
 
-	migrations := []entity.Migration {
-	}
+	// If migrations table is not created, we must create it first
+	migrationContext.Apply(nil)
+
+	migrationRepository := repository.NewMigrationRepository(db)
+
+	migrationInterface,_ := migrationRepository.GetAll()
+	migrations := migrationInterface.([]entity.Migration)
 
 	migrationContext.Apply(migrations)
 
