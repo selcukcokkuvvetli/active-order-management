@@ -7,9 +7,10 @@ import (
 
 func (mc *Context) Apply(migrations []entity.Migration) {
 	if len(migrations) > 0 {
-		/*for _, v := range migrations {
+		for _, v := range migrations {
+			mc.order_place_type_table_create_20220223(v)
 		}
-		 */
+
 	} else {
 		err := mc.initial_migration_table_create_20220216(entity.Migration{Version: "0.0.0"})
 		global.PanicIfError(err)
