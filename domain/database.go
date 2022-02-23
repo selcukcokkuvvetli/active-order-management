@@ -31,15 +31,22 @@ func (dc *DatabaseContext) Close(db *sql.DB) {
 	fmt.Println("\n Database connection successfuly closed. \n")
 }
 
-func  (dc *DatabaseContext) Migrate(db *sql.DB) error {
-	migrationContext := migration.NewContext(db)
+func (dc *DatabaseContext) Migrate(db *sql.DB) error {
+
+	migrationRepository := repository.NewMigrationRepository(db)
+
+	migrationContext := migration.NewContext(db, migrationRepository)
 
 	// If migrations table is not created, we must create it first
 	migrationContext.Apply(nil)
 
-	migrationRepository := repository.NewMigrationRepository(db)
+	migrationRepository.Add(entity.Migration{
+		Version:     "0.0.1",
+		Description: "Order place type created",
+		IsApplied:   false,
+	})
 
-	migrationInterface,_ := migrationRepository.GetAll()
+	migrationInterface, _ := migrationRepository.GetAll()
 	migrations := migrationInterface.([]entity.Migration)
 
 	migrationContext.Apply(migrations)

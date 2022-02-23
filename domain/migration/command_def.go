@@ -7,6 +7,7 @@ import (
 type Command interface {
 	CreateTable(name, columns string) error
 	AlterTable(name, commands string) error
+	Execute(queryCommand string) error
 }
 
 type CommandContext struct {
