@@ -61,7 +61,7 @@ func (optr *OrderPlaceTypeRepository) Last() (interface{}, error) {
 		&orderPlaceType.ModifiedDate)
 
 	err := row.Err()
-	return *orderPlaceType, err
+	return orderPlaceType, err
 }
 
 func (optr *OrderPlaceTypeRepository) Delete(id string) error {
