@@ -7,9 +7,9 @@ import (
 
 func HealthCheckRoutes(api fiber.Router) {
 
-	healtCheck := api.Group("health-check")
+	healthCheck := api.Group("health-check")
 
-	healtCheck.Get("ping", health_check_handler.Ping)
+	healthCheck.Get("ping", health_check_handler.Ping)
 
-	healtCheck.Get("db-check",health_check_handler.DBCheck)
+	healthCheck.Get("db-check",health_check_handler.DBCheck)
 }

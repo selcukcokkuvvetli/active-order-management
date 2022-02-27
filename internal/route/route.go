@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func InitilizeRoutes(app *fiber.App) {
+func InitializeRoutes(app *fiber.App) {
 	api := app.Group("/api")
 
 	HealthCheckRoutes(api)

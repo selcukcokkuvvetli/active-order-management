@@ -11,7 +11,7 @@ func main() {
 	fmt.Println("project start")
 	app := fiber.New()
 
-	route.InitilizeRoutes(app)
+	route.InitializeRoutes(app)
 
 	dbContext := domain.NewDatabaseContext("localhost","active-order-management-db","aomdbuser","aom123.",5432)
 	db,err := dbContext.Open()
