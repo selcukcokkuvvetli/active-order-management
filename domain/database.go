@@ -6,7 +6,6 @@ import (
 	"active-order-management/domain/repository"
 	"database/sql"
 	"fmt"
-
 	_ "github.com/lib/pq"
 )
 
@@ -34,7 +33,6 @@ func (dc *DatabaseContext) Close(db *sql.DB) {
 func (dc *DatabaseContext) Migrate(db *sql.DB) error {
 
 	migrationRepository := repository.NewMigrationRepository(db)
-
 	migrationContext := migration.NewContext(db, migrationRepository)
 
 	// If migrations table is not created, we must create it first
