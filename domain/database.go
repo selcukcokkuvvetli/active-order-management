@@ -44,6 +44,12 @@ func (dc *DatabaseContext) Migrate(db *sql.DB) error {
 		IsApplied:   false,
 	})
 
+	migrationRepository.Add(entity.Migration{
+		Version:     "0.0.2",
+		Description: "Order place created",
+		IsApplied:   false,
+	})
+
 	migrationInterface, _ := migrationRepository.GetAll()
 	migrations := migrationInterface.([]entity.Migration)
 
