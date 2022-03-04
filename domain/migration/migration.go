@@ -9,6 +9,7 @@ func (mc *Context) Apply(migrations []entity.Migration) {
 	if len(migrations) > 0 {
 		for _, migration := range migrations {
 			mc.order_place_type_table_create_20220223(migration)
+			mc.order_place_table_create_20220303(migration)
 			migration.IsApplied = true
 			mc.MigrationRepository.Update(migration)
 		}
