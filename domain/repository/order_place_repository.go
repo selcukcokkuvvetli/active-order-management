@@ -85,7 +85,7 @@ func (opr *OrderPlaceRepository) Add(newModel interface{}) error {
 
 func (opr *OrderPlaceRepository) Update(existingModel interface{}) (interface{}, error) {
 	existingOrderPlace := existingModel.(entity.OrderPlace)
-	updateEntityValues := fmt.Sprintf("name = '%s', type_id = '%s', description = '%s', is_active = '%s', is_deleted = '%s', modified_date = '%s'", existingOrderPlace.Name, existingOrderPlace.TypeID, existingOrderPlace.Description,
+	updateEntityValues := fmt.Sprintf("name = '%s', description = '%s', is_active = '%s', is_deleted = '%s', modified_date = '%s'", existingOrderPlace.Name, existingOrderPlace.Description,
 		global.BoolToPSQLBit(existingOrderPlace.IsActive), global.BoolToPSQLBit(existingOrderPlace.IsDeleted), existingOrderPlace.ModifiedDate.Format(time.RFC3339))
 	query := fmt.Sprintf(UpdateQuery, tableNameOrderPlace, updateEntityValues, "id", existingOrderPlace.ID)
 
