@@ -8,11 +8,14 @@ import (
 func (mc *Context) Apply(migrations []entity.Migration) {
 	if len(migrations) > 0 {
 		for _, migration := range migrations {
-			mc.order_place_type_table_create_20220223(migration)
-			mc.order_place_table_create_20220303(migration)
-			mc.order_table_create_20220305(migration)
-			migration.IsApplied = true
-			mc.MigrationRepository.Update(migration)
+			err := mc.order_place_type_table_create_20220223(migration)
+			err = mc.order_place_table_create_20220303(migration)
+      		err = mc.order_table_create_20220305(migration)
+			err = mc.order_item_table_creation_20220305(migration)
+			if err == nil {
+				migration.IsApplied = true
+				mc.MigrationRepository.Update(migration)
+			}
 		}
 
 	} else {

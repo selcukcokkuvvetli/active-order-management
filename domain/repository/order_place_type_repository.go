@@ -47,6 +47,8 @@ func (optr *OrderPlaceTypeRepository) GetAll() (interface{}, error) {
 		rows.Scan(&orderPlaceType.ID, &orderPlaceType.Name, &orderPlaceType.Description,
 			&orderPlaceType.IsActive, &orderPlaceType.IsDeleted, &orderPlaceType.CreatedDate,
 			&orderPlaceType.ModifiedDate)
+
+		orderPlaceTypes = append(orderPlaceTypes, *orderPlaceType)
 	}
 	return orderPlaceTypes, nil
 }
