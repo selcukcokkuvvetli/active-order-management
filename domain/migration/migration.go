@@ -10,6 +10,7 @@ func (mc *Context) Apply(migrations []entity.Migration) {
 		for _, migration := range migrations {
 			err := mc.order_place_type_table_create_20220223(migration)
 			err = mc.order_place_table_create_20220303(migration)
+      err = mc.order_table_create_20220305(migration)
 			err = mc.order_item_table_creation_20220305(migration)
 			if err == nil {
 				migration.IsApplied = true
