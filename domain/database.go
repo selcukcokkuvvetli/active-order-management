@@ -34,7 +34,7 @@ func (dc *DatabaseContext) Migrate(db *sql.DB) error {
 
 	migrationRepository := repository.NewMigrationRepository(db)
 	migrationContext := migration.NewContext(db, migrationRepository)
-
+	
 	// If migrations table is not created, we must create it first
 	migrationContext.Apply(nil)
 
