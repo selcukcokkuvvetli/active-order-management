@@ -95,10 +95,10 @@ func (opr *OrderItemRepository) Delete(id string) error {
 }
 
 func (opr *OrderItemRepository) Add(newModel interface{}) error {
-	neworderItem := newModel.(entity.OrderItem)
-	newEntityValues := fmt.Sprintf("'%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s'", neworderItem.OrderID, neworderItem.Name, neworderItem.Description,
-		neworderItem.Price, neworderItem.PriceVat, global.BoolToPSQLBit(neworderItem.IsActive), global.BoolToPSQLBit(neworderItem.IsDeleted),
-		neworderItem.CreatedDate.Format(time.RFC3339), neworderItem.ModifiedDate.Format(time.RFC3339))
+	newOrderItem := newModel.(entity.OrderItem)
+	newEntityValues := fmt.Sprintf("'%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s'", newOrderItem.OrderID, newOrderItem.Name, newOrderItem.Description,
+		newOrderItem.Price, newOrderItem.PriceVat, global.BoolToPSQLBit(newOrderItem.IsActive), global.BoolToPSQLBit(newOrderItem.IsDeleted),
+		newOrderItem.CreatedDate.Format(time.RFC3339), newOrderItem.ModifiedDate.Format(time.RFC3339))
 
 	query := fmt.Sprintf(AddQuery, tableNameOrderItem, tableColumnsOrderItem, newEntityValues)
 	_, err := opr.DB.Exec(query)
