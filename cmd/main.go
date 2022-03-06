@@ -10,15 +10,14 @@ import (
 func main() {
 	fmt.Println("project start")
 	app := fiber.New()
-
-	route.InitializeRoutes(app)
-
 	dbContext := domain.NewDatabaseContext("localhost","active-order-management-db","aomdbuser","aom123.",5432)
 	db,err := dbContext.Open()
 	if err == nil {
 		dbContext.Migrate(db)
-		dbContext.Close(db)
+		defer dbContext.Close(db)
 	}
+
+	route.InitializeRoutes(app,db)
 
 	app.Listen(":3000")
 }
