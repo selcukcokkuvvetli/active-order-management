@@ -14,15 +14,15 @@ const (
 )
 
 type Order struct {
-	ID           string
-	OrderPlaceID string
-	SubTotal     decimal.Decimal
-	Total        decimal.Decimal
-	Discount     decimal.Decimal
-	Status       OrderStatus
-	WorkerPerson string
-	IsActive     bool
-	IsDeleted    bool
-	CreatedDate  time.Time
-	ModifiedDate time.Time
+	ID           string          `json:"id"`
+	OrderPlaceID string          `json:"order_place_id"`
+	SubTotal     decimal.Decimal `json:"sub_total"`
+	Total        decimal.Decimal `json:"total"`
+	Discount     decimal.Decimal `json:"discount"`
+	Status       OrderStatus     `json:"status"`
+	WorkerPerson string          `json:"worker_person"`
+	IsActive     bool            `json:"is_active"`
+	IsDeleted    bool            `json:"is_deleted"`
+	CreatedDate  time.Time       `json:"created_date"`
+	ModifiedDate time.Time       `json:"modified_date"`
 }
