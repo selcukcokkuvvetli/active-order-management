@@ -21,11 +21,11 @@ func NewOrderItemRepository(db *sql.DB) *OrderItemRepository {
 	return &OrderItemRepository{DB: db}
 }
 
-func (opr *OrderItemRepository) Get(id string) (interface{}, error) {
+func (oir *OrderItemRepository) Get(id string) (interface{}, error) {
 	orderItem := new(entity.OrderItem)
 	query := fmt.Sprintf(GetQuery, tableNameOrderItem, "id", id)
 
-	row := opr.DB.QueryRow(query)
+	row := oir.DB.QueryRow(query)
 	row.Scan(&orderItem.ID, &orderItem.OrderID, &orderItem.Name, &orderItem.Description,
 		&orderItem.Price, &orderItem.PriceVat, &orderItem.IsActive, &orderItem.IsDeleted,
 		&orderItem.CreatedDate, &orderItem.ModifiedDate)
@@ -33,12 +33,12 @@ func (opr *OrderItemRepository) Get(id string) (interface{}, error) {
 	return orderItem, err
 }
 
-func (opr *OrderItemRepository) GetAll() (interface{}, error) {
+func (oir *OrderItemRepository) GetAll() (interface{}, error) {
 	orderItems := make([]entity.OrderItem, 0)
 
 	query := fmt.Sprintf(GetAllQuery, tableNameOrderItem)
 
-	rows, err := opr.DB.Query(query)
+	rows, err := oir.DB.Query(query)
 	if err != nil {
 		return nil, err
 	}
@@ -53,12 +53,14 @@ func (opr *OrderItemRepository) GetAll() (interface{}, error) {
 	return orderItems, nil
 }
 
-func (opr *OrderItemRepository) GetAllByOrderId(orderId string) (interface{}, error) {
+func (oir *OrderItemRepository) GetAllByOrderId(orderId string) (interface{}, error) {
 	orderItems := make([]entity.OrderItem, 0)
 
 	query := fmt.Sprintf(GetQuery, tableNameOrderItem, "order_id", orderId)
+	fmt.Println(orderId)
+	rows, err := oir.DB.Query(query)
 
-	rows, err := opr.DB.Query(query)
+	fmt.Println("err2")
 	if err != nil {
 		return nil, err
 	}
@@ -70,14 +72,14 @@ func (opr *OrderItemRepository) GetAllByOrderId(orderId string) (interface{}, er
 
 		orderItems = append(orderItems, *orderItem)
 	}
-	return orderItems, nil
+	return orderItems, err
 }
 
-func (opr *OrderItemRepository) Last() (interface{}, error) {
+func (oir *OrderItemRepository) Last() (interface{}, error) {
 	orderItem := new(entity.OrderItem)
 	query := fmt.Sprintf(LastQuery, tableNameOrderItem, "created_date")
 
-	row := opr.DB.QueryRow(query)
+	row := oir.DB.QueryRow(query)
 	row.Scan(&orderItem.ID, &orderItem.OrderID, &orderItem.Name, &orderItem.Description,
 		&orderItem.Price, &orderItem.PriceVat, &orderItem.IsActive, &orderItem.IsDeleted,
 		&orderItem.CreatedDate, &orderItem.ModifiedDate)
@@ -86,33 +88,33 @@ func (opr *OrderItemRepository) Last() (interface{}, error) {
 	return orderItem, err
 }
 
-func (opr *OrderItemRepository) Delete(id string) error {
+func (oir *OrderItemRepository) Delete(id string) error {
 	query := fmt.Sprintf(DeleteQuery, tableNameOrderItem, "id", id)
 
-	_, err := opr.DB.Exec(query)
+	_, err := oir.DB.Exec(query)
 
 	return err
 }
 
-func (opr *OrderItemRepository) Add(newModel interface{}) error {
+func (oir *OrderItemRepository) Add(newModel interface{}) error {
 	newOrderItem := newModel.(entity.OrderItem)
 	newEntityValues := fmt.Sprintf("'%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s'", newOrderItem.OrderID, newOrderItem.Name, newOrderItem.Description,
 		newOrderItem.Price, newOrderItem.PriceVat, global.BoolToPSQLBit(newOrderItem.IsActive), global.BoolToPSQLBit(newOrderItem.IsDeleted),
 		newOrderItem.CreatedDate.Format(time.RFC3339), newOrderItem.ModifiedDate.Format(time.RFC3339))
 
 	query := fmt.Sprintf(AddQuery, tableNameOrderItem, tableColumnsOrderItem, newEntityValues)
-	_, err := opr.DB.Exec(query)
+	_, err := oir.DB.Exec(query)
 	return err
 }
 
-func (opr *OrderItemRepository) Update(existingModel interface{}) (interface{}, error) {
+func (oir *OrderItemRepository) Update(existingModel interface{}) (interface{}, error) {
 	existingOrderItem := existingModel.(entity.OrderItem)
 	updateEntityValues := fmt.Sprintf("name = '%s',  description = '%s', price = '%s', price_vat = '%s', is_active = '%s', is_deleted = '%s', modified_date = '%s'", existingOrderItem.Name, existingOrderItem.Description,
 		existingOrderItem.Price, existingOrderItem.PriceVat, global.BoolToPSQLBit(existingOrderItem.IsActive),
 		global.BoolToPSQLBit(existingOrderItem.IsDeleted), existingOrderItem.ModifiedDate.Format(time.RFC3339))
 	query := fmt.Sprintf(UpdateQuery, tableNameOrderItem, updateEntityValues, "id", existingOrderItem.ID)
 
-	_, err := opr.DB.Exec(query)
+	_, err := oir.DB.Exec(query)
 
 	return existingOrderItem, err
 }

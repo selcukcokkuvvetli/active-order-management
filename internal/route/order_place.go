@@ -8,13 +8,13 @@ import (
 
 func OrderPlaceRoutes(api fiber.Router, repository *repository.Repository) {
 
-	optHandler := order_place_handler.NewHandler(repository)
+	opHandler := order_place_handler.NewHandler(repository)
 
 	orderPlace := api.Group("order-places")
 
-	orderPlace.Get("/:id", optHandler.Get)
-	orderPlace.Get("/", optHandler.GetAll)
-	orderPlace.Put("/", optHandler.Put)
-	orderPlace.Post("/", optHandler.Post)
-	orderPlace.Delete("/:id", optHandler.Delete)
+	orderPlace.Get("/:id", opHandler.Get)
+	orderPlace.Get("/", opHandler.GetAll)
+	orderPlace.Put("/", opHandler.Put)
+	orderPlace.Post("/", opHandler.Post)
+	orderPlace.Delete("/:id", opHandler.Delete)
 }
