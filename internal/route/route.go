@@ -13,7 +13,10 @@ func InitializeRoutes(app *fiber.App, db *sql.DB) {
 
 	orderPlaceTypeRepository := repository.NewOrderPlaceTypeRepository(db)
 	OrderPlaceTypeRoutes(api, &orderPlaceTypeRepository)
-
-	orderRepository := repository.NewOrderRepository(db)
+  
+  orderPlaceRepository := repository.NewOrderPlaceRepository(db)
+	OrderPlaceRoutes(api, &orderPlaceRepository)
+  
+  orderRepository := repository.NewOrderRepository(db)
 	OrderRoutes(api, &orderRepository)
 }
