@@ -22,7 +22,7 @@ func TestCreateTable(t *testing.T) {
 	defer db.Close()
 
 
-	t.Run("Altering table successfully", func(t *testing.T) {
+	t.Run("Creating table successfully", func(t *testing.T) {
 
 		sqlMock.ExpectExec(query).WillReturnResult(sqlmock.NewResult(1, 1))
 
@@ -31,7 +31,7 @@ func TestCreateTable(t *testing.T) {
 		assert.Nil(t, err)
 	})
 
-	t.Run("Alter table returns error", func(t *testing.T) {
+	t.Run("Create table returns error", func(t *testing.T) {
 		want := errors.New("Altering table failed")
 		sqlMock.ExpectExec(query).WillReturnError(want)
 
