@@ -60,7 +60,6 @@ func (oir *OrderItemRepository) GetAllByOrderId(orderId string) (interface{}, er
 	fmt.Println(orderId)
 	rows, err := oir.DB.Query(query)
 
-	fmt.Println("err2")
 	if err != nil {
 		return nil, err
 	}

@@ -27,21 +27,21 @@ func (h *Handler) Get(c *fiber.Ctx) error {
 }
 
 func (h *Handler) GetAll(c *fiber.Ctx) error {
-	orderItemInt, err := h.service.GetAll()
+	orderItemsInt, err := h.service.GetAll()
 	if err != nil {
 		return err
 	}
-	result := orderItemInt.([]entity.OrderItem)
+	result := orderItemsInt.([]entity.OrderItem)
 	return c.JSON(result)
 }
 
 func (h *Handler) GetAllByOrderId(c *fiber.Ctx) error {
 	orderID := c.Params("order_id")
-	orderItemInt, err := h.service.GetAllByOrderId(orderID)
+	orderItemsInt, err := h.service.GetAllByOrderId(orderID)
 	if err != nil {
 		return err
 	}
-	result := orderItemInt.([]entity.OrderItem)
+	result := orderItemsInt.([]entity.OrderItem)
 	return c.JSON(result)
 }
 
@@ -61,13 +61,13 @@ func (h *Handler) Post(c *fiber.Ctx) error {
 }
 
 func (h *Handler) Put(c *fiber.Ctx) error {
-	var existingOI entity.OrderItem
-	err := json.Unmarshal(c.Body(), &existingOI)
+	var existingOrderItem entity.OrderItem
+	err := json.Unmarshal(c.Body(), &existingOrderItem)
 	if err != nil {
 		return err
 	}
 
-	serviceResult, err := h.service.Put(existingOI)
+	serviceResult, err := h.service.Put(existingOrderItem)
 	if err != nil {
 		return err
 	}
